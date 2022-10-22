@@ -13,13 +13,10 @@ def search():
     if query is None:
         query = ''
     documents = retrieve(query)
-    # scored = [(doc, score(query, doc)) for doc in documents]
-    # scored = sorted(scored, key=lambda doc: -doc[1])
-    # name, category, characteristic, proisvoditel
-    # results = [doc.format(query)+['%.2f' % scr] for doc, scr in scored]
     results = [doc.format(query) for doc in documents]
     return render_template(
         'template/Search.html',
+        time="%.2f" % (time() - start_time),
         query=query,
         results=results
     )
@@ -27,11 +24,13 @@ def search():
 
 @app.route('/', methods=['GET'])
 def index():
+    query = request.args.get('query')
     return render_template('template/index.html')
 
 
 @app.route('/Privacy.html', methods=['GET'])
 def privacy():
+    query = request.args.get('query')
     return render_template('template/Privacy.html')
 
 

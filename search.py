@@ -26,13 +26,36 @@ class Document:
     def format(self, query):
         # возвращает пару тайтл-текст, отформатированную под запрос
         # что добавлять лизе
-        return [self.id, self.title, self.cluster, self.new_char]
+        return [self.id, self.title, self.cluster,
+                chartotext(self.new_char) + sellerstotext(self.sellers)]
 
 
 index = []
 title_invert_index = {}
 tfidf_matrix = 0
 tf = 0
+
+import ast
+
+
+def chartotext(characteristics):
+    characteristics = ast.literal_eval(characteristics)
+    if characteristics is None or len(characteristics.keys()) == 0:
+        return 'Характеристики данного товара не указаны.'
+    txt = 'Характеристики товара:\n'
+    for ch in characteristics.keys():
+        txt += f'{ch.title()} - {characteristics[ch]}\n'
+    return txt
+
+
+def sellerstotext(sellers):
+    sellers = ast.literal_eval(sellers)
+    if sellers is None or len(sellers.keys()) == 0:
+        return 'Данный товар еще не был продан.'
+    txt = 'Поставщики:\n'
+    for ch in sellers.keys():
+        txt += f'{ch} - {sellers[ch]} ₽\n'
+    return txt
 
 
 def build_index():
@@ -51,7 +74,7 @@ def build_index():
 
 def tf_idf_off(ls):
     global tf
-    tf = TfidfVectorizer()
+    tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 3), min_df=0)
     vectorizer = tf.fit_transform(ls)  # TfidfVectorizer(analyzer='word')
     return vectorizer
 
@@ -90,19 +113,14 @@ def retrieve(query):
         # перепроверка на транслит
         return []
     else:
-        candidates = list(set.intersection(*map(set,words_indexes)))
+        candidates = list(set.intersection(*map(set, words_indexes)))
         candidates = np.array(candidates)
         sc = score(query, tfidf_matrix[candidates])
         ans = np.append(sc, candidates.reshape(-1, 1), axis=1)
         ans.sort()
-
+        print(ans)
         index1 = np.array(index)
         finl_doc = index1[list(map(int, ans[:, 1][:15]))]
 
         return finl_doc
 
-# import time
-#
-# start_time = time.time()
-# build_index()
-# print("Построение индекса заняло --- %s seconds ---" % (time.time() - start_time))
