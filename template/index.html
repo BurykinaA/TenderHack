@@ -24,25 +24,21 @@
                 <a href="https://zakupki.mos.ru/"><img src="pp_logo.svg" draggable="false" class="displayed" width="90%" align="middle" vspace="0px"></a>
            
             </div>
-            <a class="nav-link text-dark" asp-area="" href="/" aria-current="page"">MISIShunters</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+            <a class="nav-link text-dark" asp-area="" href="/" aria-current="page">MISIShunters</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" href="/" aria-current="page"">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" href="/Info.html" aria-current="page">Info</a>
+                        <a class="nav-link text-dark" asp-area="" href="/" aria-current="page">Home</a>
                     </li>
                 </ul>
                 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Параметры</button>
                 <div class="container-fluid">
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query'>
-                        <button class="btn btn-outline-primary" type="submit">Search</button>
+                        <input class="form-control me-2" id="searchRequest">
+                        <button class="btn btn-outline-primary" type="submit" onclick="redirect()">Search</button>
                     </form>
 
                 </div>
@@ -58,8 +54,7 @@
 
 <a href="/Search.html" class="btn btn-info" role="button">Тестовая кнопка</a>
 
-
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasRightLabel">Параметры поиска</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
@@ -67,17 +62,42 @@
         <div class="offcanvas-body">
             <div class="container-fluid">
                 <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query'>
-                    <button class="btn btn-outline-primary" type="submit" >Search</button><br>
+                    <input class="form-control me-2" id="searchRequest">
+                        <button class="btn btn-outline-primary" type="submit" onclick="redirect1()">Search</button><br>
                 </form>
                 <br>
+                <div class="container">
+                    <h6>Статус</h6> 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Флажок по умолчанию
-                    </label>
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="id_1" value="all" checked>
+                  <label class="form-check-label" for="flexRadioDefault1" >
+                    Все закупки
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="id_2" value="active">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Активные
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="id_3" value="closed">
+                  <label class="form-check-label" for="flexRadioDefault3">
+                    Завершенные
+                  </label>
                 </div>
             </div>
+                <br>
+                <div class="container">
+                    <h6>Цена,₽ </h6> 
+                    <div class="input-group">
+                      <span class="input-group-text">с</span>
+                      <input class="form-control" type="text" id="coastStartRequest" >
+                        <span class="input-group-text">по</span>
+                      <input class="form-control" type="text" id="coastEndRequest">
+                    </div>
+            </div>
+                </div>
             <h1 class="display-4"> </h1><br>
             
 
@@ -85,6 +105,7 @@
             
         </div>
     </div>
+                
 
      <div class="container">
          <div class="row my-3">
@@ -104,7 +125,8 @@
                 <div class="col-md-6 py-1">
                     <div class="card">
                         <div class="card-body">
-                            <h7>Топ-10 компаний по продажам</h7>
+                            <h7>Топ-10 компаний по продажам <br></h7>
+                            <h7><br></h7>
                             <canvas id="chBar"></canvas>
                         </div>
                     </div>
@@ -120,7 +142,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        
       
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
     
@@ -238,7 +260,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
 
-</body>
+
 <br><br><br>
  <footer class="border-top footer text-muted">
         <div class="container">
@@ -246,5 +268,27 @@
         </div>
     </footer>
 
+<script> 
+    document.addEventListener("click", function(isit) {
+        the_class = isit. target.className;
+        the_id = isit. target.id;
+        if (the_class =="form-check-input")
+        {
+            var statusrequest = (document.querySelector("#"+the_id ).value);
+        }
+        });
+    
+    function redirect() {
+      var request = document.getElementById('searchRequest').value;
+      location.href = ('Search.html?query=' + request);
+  } 
+    function redirect1() {
+      var srequest = document.getElementById('searchRequest').value;
+        
+        var csrequest = document.getElementById('coastStartRequest').value;
+        var cerequest = document.getElementById('coastEndRequest').value;
+      location.href = ('Search.html/price=' +csrequest+'-'+cerequest+'/status=' + statusrequest +'?query='+srequest );
+  } 
+</script>
   </body>
 </html>

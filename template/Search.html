@@ -27,26 +27,23 @@
            
             </div>
             
-            <a class="nav-link text-dark" asp-area="" href="/" aria-current="page"">MISIShunters</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+            <a class="nav-link text-dark" asp-area="" href="/" aria-current="page">MISIShunters</a>
+                                                                                   
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" href="/" aria-current="page"">Home</a>
+                        <a class="nav-link text-dark" asp-area="" href="/" aria-current="page">Home</a>
                     </li>
-        
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" href="/Info.html" aria-current="page">Info</a>
-                    </li>
-        
+                
                 </ul>
                 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Параметры</button>
+                
                 <div class="container-fluid">
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query'>
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query' value="{{query}}">
                         <button class="btn btn-outline-primary" type="submit">Search</button>
                     </form>
 
@@ -54,7 +51,7 @@
 
             </div>
 
-        </div>
+        
 
     </nav>
 
@@ -64,27 +61,55 @@
 
 <!-- Всплывающий справа поиск -->
 
+
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasRightLabel">Параметры поиска</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
         </div>
-        
         <div class="offcanvas-body">
             <div class="container-fluid">
                 <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query'>
-                    <button class="btn btn-outline-primary" type="submit">Search</button><br>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query' value="{{query}}">
+                    <button class="btn btn-outline-primary" type="submit" >Search</button><br>
                 </form>
                 <br>
+                <div class="container">
+                    <h6>Статус</h6> 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Флажок по умолчанию
-                    </label>
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="all" checked>
+                  <label class="form-check-label" for="flexRadioDefault1" >
+                    Все закупки
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="active">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Активные
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" value="closed">
+                  <label class="form-check-label" for="flexRadioDefault3">
+                    Завершенные
+                  </label>
                 </div>
             </div>
+                <br>
+                <div class="container">
+                    <h6>Цена,₽ </h6> 
+                    <div class="input-group">
+                      <span class="input-group-text">с</span>
+                      <input type="text" aria-label="start" class="form-control" name="start" value="{{start}}" >
+                        <span class="input-group-text">по</span>
+                      <input type="text" aria-label="end" name="end" class="form-control" value="{{end}}">
+                    </div>
+            </div>
+                </div>
             <h1 class="display-4"> </h1><br>
+            
+
+
             
         </div>
     </div>
@@ -104,6 +129,19 @@
     
     {% endif %}
 
+    {% if что-то с тем, что написали хуево, наверное просить у алины идентификатор какой-то' %}
+    <div class="container">
+            <a>Показаны результаты по запросу {{query_output}}<br>
+           Искать вместо этого <a asp-area="" href="/Search.html" aria-current="page">{{query}}</a></a>
+        </div>
+    {% endif %}
+
+    {% if отработал берт, тоже идентификатор' %}
+    <div class="container">
+            <a>Показаны результаты в категории {{category}}<br>
+           <a asp-area="" href="/Search.html" aria-current="page">Посмотреть все результаты поиска</a></a>
+        </div>
+    {% endif %}
 
 <!-- вывод карточек товаров -->
 {% for i, name, title, description in results %}
@@ -147,31 +185,6 @@
     {% endfor %}
         
 
-
-
-<!-- убрать  кусок текста ниже -->
-
-           <div class="container">
-            <main role="main" class="pb-3">
-
-                <div class="card w-100">
-                  <div class="card-body">
-                    <h5 class="card-title">{{ title1 }}</h5>
-                    <p class="card-text">{{ title2 }}</p>
-                    <p>
-                      <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                        Подробнее
-                      </a>
-                    </p>
-                    <div class="collapse" id="collapseExample">
-                      <div class="card card-body">
-                        {{ title3 }}
-                      </div>
-                    </div>
-                </div>
-            </div>            
-        </main>
-    </div>
 
 
 

@@ -13,7 +13,7 @@
  */
 
 /* global bootstrap: false */
-
+/*  */
 import './styles.scss';
 
 (() => {
