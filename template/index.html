@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!--
+      Need a visual blank slate?
+      Remove all code in `styles.css`!
+    -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="main.css" />
+    <script type="module" src="main.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  </head>
+    <body>
+  <header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light badge-light border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="image">
+                <a href="https://zakupki.mos.ru/"><img src="pp_logo.svg" draggable="false" class="displayed" width="90%" align="middle" vspace="0px"></a>
+           
+            </div>
+            <a class="nav-link text-dark" asp-area="" href="/" aria-current="page"">MISIShunters</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" href="/" aria-current="page"">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" href="/Info.html" aria-current="page">Info</a>
+                    </li>
+                </ul>
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Параметры</button>
+                <div class="container-fluid">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query'>
+                        <button class="btn btn-outline-primary" type="submit">Search</button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <img src="Group1.png" draggable="false" class="displayed" width="100%" align="middle" vspace="0px">
+</header>
+
+<a href="/Search.html" class="btn btn-info" role="button">Тестовая кнопка</a>
+
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Параметры поиска</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="container-fluid">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query'>
+                    <button class="btn btn-outline-primary" type="submit" >Search</button><br>
+                </form>
+                <br>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Флажок по умолчанию
+                    </label>
+                </div>
+            </div>
+            <h1 class="display-4"> </h1><br>
+            
+
+
+            
+        </div>
+    </div>
+
+     <div class="container">
+         <div class="row my-3">
+                <div class="col">
+                    <h4>Аналитика полученных данных</h4>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md-6 py-1">
+                    <div class="card">                        
+                        <div class="card-body">
+                            <h7>Сравнение топ-5 компаний по продажам за 2021 год с продажами за 2020.<br> 2021-фиолетовый, 2020- голубой</h7>
+                            <canvas id="chLine"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 py-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <h7>Топ-10 компаний по продажам</h7>
+                            <canvas id="chBar"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="col-md-4 py-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <h7>Сравнение продаж за период с 2015 по 2021 год</h7>
+                            <canvas id="chDonut3"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+    
+    <script>
+    /* chart.js chart examples */
+    
+    // chart colors
+    var colors = ['#f76363', '#9963f7','#63b7f7','#76deb4','#cce64c','#e6ad4c'];
+    
+    /* large line chart */
+    var chLine = document.getElementById("chLine");
+    var chartData = {
+      labels: ['ООО "ОФИСМАГ"', 'ООО "ЦТО"', 'ООО НП "МОДУС', 'ООО "АПИКОМПРОЕКТ"', 'ООО ТК "СНАБТОРГ"'],
+      datasets: [{
+        data: [1048, 1961, 661, 656, 594],
+        backgroundColor: 'transparent',
+        borderColor: colors[1],
+        borderWidth: 4,
+        pointBackgroundColor: colors[1]
+      },
+       {
+         data: [1534, 2992, 424, 666, 115],
+         backgroundColor: 'transparent',
+         borderColor: colors[2],
+         borderWidth: 4,
+         pointBackgroundColor: colors[2]
+       }
+      ]
+    };
+    if (chLine) {
+      new Chart(chLine, {
+      type: 'line',
+      data: chartData,
+      options: {
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: false
+            }
+          }]
+        },
+        legend: {
+          display: false
+        },
+        responsive: true
+      }
+      });
+    }
+    
+   
+    
+    /* bar chart */
+    var chBar = document.getElementById("chBar");
+    if (chBar) {
+      new Chart(chBar, {
+      type: 'bar',
+      data: {
+        labels: ['ООО "ОФИСМАГ"', 'ООО "ЦТО"', 'ООО "СТИЛУС', 'ООО "КОМСЕРВИС"', 'ООО "ПЦС"', 'ООО "МОСНАБ"', 'ООО "МОСЭНЕРГОСЕРВИС"', 'ООО "ФОРТУНА 2016"', 'ООО "АПИКОМПРОЕКТ"', 'ООО "Жизнь офиса"'],
+        datasets: [{
+          data: [6461, 5036, 3962, 1495, 1466, 1423, 1368, 1357, 1322, 1251],
+          backgroundColor: colors[3]
+        },
+        {
+          data: [0],
+          backgroundColor: colors[1]
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            barPercentage: 2.5,
+            categoryPercentage: 0.5
+          }]
+        }
+      }
+      });
+    }
+    
+    /* 3 donut charts */
+    var donutOptions = {
+      cutoutPercentage: 0, 
+      legend: {position:'bottom', padding:5, labels: {pointStyle:'circle', usePointStyle:true}}
+    };
+    
+
+    // donut 3
+    var chDonutData3 = {
+        labels: ['2021', '2020', '2019', '2018', '2017', '2016', '2015'],
+        datasets: [
+          {
+            backgroundColor: colors.slice(0,7),
+            borderWidth: 0,
+            data: [125248, 108570, 99299, 73593, 8246, 25, 1]
+          }
+        ]
+    };
+    var chDonut3 = document.getElementById("chDonut3");
+    if (chDonut3) {
+      new Chart(chDonut3, {
+          type: 'pie',
+          data: chDonutData3,
+          options: donutOptions
+      });
+    }
+
+    
+
+    </script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+</body>
+<br><br><br>
+ <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - MISIShunters - <a asp-area="" href="/Privacy.html" aria-current="page">Privacy</a>
+        </div>
+    </footer>
+
+  </body>
+</html>
