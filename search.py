@@ -105,22 +105,27 @@ def retrieve(query):
     global index, title_invert_index
     processed_query = process_text(query).split()
     words_indexes = []
+    #удалить одинаковые слова в запросе
     for word in processed_query:
         if word in title_invert_index.keys():
-            if len(words_indexes) == 0:
-                words_indexes.append(title_invert_index[word])
+            #был иф убрали
+            words_indexes.append(title_invert_index[word])
     if len(words_indexes) == 0:
-        # перепроверка на транслит
         return []
     else:
         candidates = list(set.intersection(*map(set, words_indexes)))
+        if candidates == []:
+            new_a = []
+            for x in words_indexes: new_a += x
+            candidates =new_a
         candidates = np.array(candidates)
         sc = score(query, tfidf_matrix[candidates])
+
         ans = np.append(sc, candidates.reshape(-1, 1), axis=1)
-        ans.sort()
-        print(ans)
+        b = ans.tolist()
+        b.sort(reverse=True)
         index1 = np.array(index)
-        finl_doc = index1[list(map(int, ans[:, 1][:15]))]
+        finl_doc = index1[list(map(int, [x[1] for x in b[:15]]))]
 
         return finl_doc
 

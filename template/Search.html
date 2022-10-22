@@ -7,17 +7,18 @@
     <link href="https://bootstrap-4.ru/docs/5.2/assets/css/docs.css" rel="stylesheet">
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
     <title>Search</title>
-    <script type="module" src="main.js"></script>
+
       <link rel="stylesheet" href="main.css" />
     <meta name="viewport" content="width=device-width" />
 
    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-   
+
 
   </head>
     <body>
+        <script  src=""></script>
   <header>
       
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light badge-light border-bottom box-shadow mb-3">
@@ -27,23 +28,26 @@
            
             </div>
             
-            <a class="nav-link text-dark" asp-area="" href="/" aria-current="page">MISIShunters</a>
-                                                                                   
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+            <a class="nav-link text-dark" asp-area="" href="/" aria-current="page"">MISIShunters</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" href="/" aria-current="page">Home</a>
+                        <a class="nav-link text-dark" asp-area="" href="/" aria-current="page"">Home</a>
                     </li>
-                
+        
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" href="/Info.html" aria-current="page">Info</a>
+                    </li>
+        
                 </ul>
                 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Параметры</button>
-                
                 <div class="container-fluid">
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query' value="{{query}}">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query'>
                         <button class="btn btn-outline-primary" type="submit">Search</button>
                     </form>
 
@@ -51,7 +55,7 @@
 
             </div>
 
-        
+        </div>
 
     </nav>
 
@@ -61,35 +65,35 @@
 
 <!-- Всплывающий справа поиск -->
 
-
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasRightLabel">Параметры поиска</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
         </div>
+        
         <div class="offcanvas-body">
             <div class="container-fluid">
                 <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query' value="{{query}}">
-                    <button class="btn btn-outline-primary" type="submit" >Search</button><br>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query'>
+                    <button class="btn btn-outline-primary" type="submit">Search</button><br>
                 </form>
                 <br>
                 <div class="container">
                     <h6>Статус</h6> 
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="all" checked>
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="id_1" value="all" checked>
                   <label class="form-check-label" for="flexRadioDefault1" >
                     Все закупки
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="active">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="id_2" value="active">
                   <label class="form-check-label" for="flexRadioDefault2">
                     Активные
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" value="closed">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="id_3" value="closed">
                   <label class="form-check-label" for="flexRadioDefault3">
                     Завершенные
                   </label>
@@ -100,16 +104,13 @@
                     <h6>Цена,₽ </h6> 
                     <div class="input-group">
                       <span class="input-group-text">с</span>
-                      <input type="text" aria-label="start" class="form-control" name="start" value="{{start}}" >
+                      <input class="form-control" type="text" id="coastStartRequest" >
                         <span class="input-group-text">по</span>
-                      <input type="text" aria-label="end" name="end" class="form-control" value="{{end}}">
+                      <input class="form-control" type="text" id="coastEndRequest">
                     </div>
             </div>
-                </div>
+            </div>
             <h1 class="display-4"> </h1><br>
-            
-
-
             
         </div>
     </div>
@@ -128,19 +129,24 @@
     </div>
     
     {% endif %}
+<!-- вывод соо о том, что поиск не получился -->
+    {% if query == '' %}
+            <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+      <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
+        <path
+          d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+        ></path>
+      </symbol>
+    </svg>
 
-    {% if что-то с тем, что написали хуево, наверное просить у алины идентификатор какой-то' %}
-    <div class="container">
-            <a>Показаны результаты по запросу {{query_output}}<br>
-           Искать вместо этого <a asp-area="" href="/Search.html" aria-current="page">{{query}}</a></a>
-        </div>
-    {% endif %}
 
-    {% if отработал берт, тоже идентификатор' %}
-    <div class="container">
-            <a>Показаны результаты в категории {{category}}<br>
-           <a asp-area="" href="/Search.html" aria-current="page">Посмотреть все результаты поиска</a></a>
-        </div>
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+      <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:">
+        <use xlink:href="#exclamation-triangle-fill"></use>
+      </svg>
+      <div>Ничего не найдено</div>
+    </div>
+    
     {% endif %}
 
 <!-- вывод карточек товаров -->
@@ -187,6 +193,31 @@
 
 
 
+<!-- убрать  кусок текста ниже -->
+
+           <div class="container">
+            <main role="main" class="pb-3">
+
+                <div class="card w-100">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ title1 }}</h5>
+                    <p class="card-text">{{ title2 }}</p>
+                    <p>
+                      <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Подробнее
+                      </a>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                      <div class="card card-body">
+                        {{ title3 }}
+                      </div>
+                    </div>
+                </div>
+            </div>            
+        </main>
+    </div>
+
+
 
   <!-- футер -->
     <footer class="border-top footer text-muted">
@@ -197,7 +228,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="main.js" asp-append-version="true"></script>
+    <script src="main.js" ></script>
 
 
 </body>

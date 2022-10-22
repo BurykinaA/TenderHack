@@ -13,8 +13,30 @@
  */
 
 /* global bootstrap: false */
-/*  */
+
 import './styles.scss';
+function SendSearchRequest(){
+
+  let requestUrl= "http://127.0.0.1:8080/Search.html?query=";
+  let queries= document.getElementsByClassName("form-control me-2");
+  let query = "";
+  for(var i =0; i<queries.length; i++){
+    if(queries[i].textContent != null || queries[i].textContent != ""){
+      query = queries[i].textContent;
+    }
+  }
+
+  requestUrl += query;
+
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", requestUrl);
+  xhr.onreadystatechange = function ()
+  { if (xhr.readyState === 4)
+  { console.log(xhr.responseText);}};
+  xhr.send();
+
+}
 
 (() => {
   'use strict'

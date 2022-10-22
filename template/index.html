@@ -10,13 +10,14 @@
     -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="main.css" />
-    <script type="module" src="main.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 
   </head>
     <body>
+    <script src="main.js"></script>
   <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light badge-light border-bottom box-shadow mb-3">
         <div class="container">
@@ -36,10 +37,10 @@
                 </ul>
                 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Параметры</button>
                 <div class="container-fluid">
-                    <form class="d-flex">
+                    <div class="d-flex">
                         <input class="form-control me-2" id="searchRequest">
                         <button class="btn btn-outline-primary" type="submit" onclick="redirect()">Search</button>
-                    </form>
+                    </div>
 
                 </div>
 
@@ -54,17 +55,18 @@
 
 <a href="/Search.html" class="btn btn-info" role="button">Тестовая кнопка</a>
 
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasRightLabel">Параметры поиска</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
         </div>
         <div class="offcanvas-body">
             <div class="container-fluid">
-                <form class="d-flex">
-                    <input class="form-control me-2" id="searchRequest">
-                        <button class="btn btn-outline-primary" type="submit" onclick="redirect1()">Search</button><br>
-                </form>
+                <div class="d-flex">
+                        <input class="form-control me-2" id="searchRequest1">
+                        <button class="btn btn-outline-primary" type="submit" onclick="redirect1()">Search</button>
+                    </div>
                 <br>
                 <div class="container">
                     <h6>Статус</h6> 
@@ -97,7 +99,7 @@
                       <input class="form-control" type="text" id="coastEndRequest">
                     </div>
             </div>
-                </div>
+            </div>
             <h1 class="display-4"> </h1><br>
             
 
@@ -105,7 +107,6 @@
             
         </div>
     </div>
-                
 
      <div class="container">
          <div class="row my-3">
@@ -125,8 +126,7 @@
                 <div class="col-md-6 py-1">
                     <div class="card">
                         <div class="card-body">
-                            <h7>Топ-10 компаний по продажам <br></h7>
-                            <h7><br></h7>
+                            <h7>Топ-10 компаний по продажам</h7>
                             <canvas id="chBar"></canvas>
                         </div>
                     </div>
@@ -142,7 +142,7 @@
                     </div>
                 </div>
             </div>
-        
+        </div>
       
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
     
@@ -260,7 +260,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
 
-
+</body>
 <br><br><br>
  <footer class="border-top footer text-muted">
         <div class="container">
@@ -268,26 +268,16 @@
         </div>
     </footer>
 
-<script> 
-    document.addEventListener("click", function(isit) {
-        the_class = isit. target.className;
-        the_id = isit. target.id;
-        if (the_class =="form-check-input")
-        {
-            var statusrequest = (document.querySelector("#"+the_id ).value);
-        }
-        });
-    
-    function redirect() {
+  <script>
+      function redirect() {
       var request = document.getElementById('searchRequest').value;
+
       location.href = ('Search.html?query=' + request);
   } 
-    function redirect1() {
-      var srequest = document.getElementById('searchRequest').value;
-        
-        var csrequest = document.getElementById('coastStartRequest').value;
-        var cerequest = document.getElementById('coastEndRequest').value;
-      location.href = ('Search.html/price=' +csrequest+'-'+cerequest+'/status=' + statusrequest +'?query='+srequest );
+      function redirect1() {
+      var request = document.getElementById('searchRequest1').value;
+
+      location.href = ('Search.html?query=' + request);
   } 
 </script>
   </body>
