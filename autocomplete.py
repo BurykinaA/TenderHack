@@ -55,6 +55,7 @@ class AutoCompleter:
         return s.ascii_lowercase + "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" + "1234567890"
 
     def processString(self, query: str, do_print = False) -> str:
+
         do_print = False
         # Remove Unicode
         output_string = re.sub(r'\W+', ' ', query)
@@ -63,7 +64,7 @@ class AutoCompleter:
         # Lowercase the document
         output_string = output_string.lower()
         # Remove punctuations
-        output_string = re.sub(r'[%s]' % re.escape('.,/"'), ' ', output_string)
+        # soutput_string = re.sub(r'[%s]' % re.escape('.,/"'), ' ', output_string)
         # Remove the doubled space
         output_string = re.sub(r'\s{2,}', ' ', output_string)
         if do_print:

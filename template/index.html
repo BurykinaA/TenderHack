@@ -8,8 +8,8 @@
       Need a visual blank slate?
       Remove all code in `styles.css`!
     -->
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="{{url_for('static', filename='/css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -17,12 +17,12 @@
 
   </head>
     <body>
-    <script src="main.js"></script>
+    <script src="{{url_for('static', filename='css/main.js')}}"></script>
   <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light badge-light border-bottom box-shadow mb-3">
         <div class="container">
             <div class="image">
-                <a href="https://zakupki.mos.ru/"><img src="pp_logo.svg" draggable="false" class="displayed" width="90%" align="middle" vspace="0px"></a>
+                <a href="https://zakupki.mos.ru/"><img src={{url_for('static', filename='img/pp_logo.svg' )}} draggable="false" class="displayed" width="90%" align="middle" vspace="0px"></a>
            
             </div>
             <a class="nav-link text-dark" asp-area="" href="/" aria-current="page">MISIShunters</a>
@@ -39,7 +39,7 @@
                 <div class="container-fluid">
                     <div class="d-flex">
                         <input class="form-control me-2" id="searchRequest">
-                        <button class="btn btn-outline-primary" type="submit" onclick="redirect()">Search</button>
+                        <button class="btn btn-outline-primary" id="submit" type="submit" onclick="redirect()">Search</button>
                     </div>
 
                 </div>
@@ -50,12 +50,8 @@
 
     </nav>
 
-    <img src="Group1.png" draggable="false" class="displayed" width="100%" align="middle" vspace="0px">
+    <img src={{url_for('static', filename='img/Group1.png' )}} draggable="false" class="displayed" width="100%" align="middle" vspace="0px">
 </header>
-
-<a href="/Search.html" class="btn btn-info" role="button">Тестовая кнопка</a>
-
-
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasRightLabel">Параметры поиска</h5>
@@ -65,25 +61,25 @@
             <div class="container-fluid">
                 <div class="d-flex">
                         <input class="form-control me-2" id="searchRequest1">
-                        <button class="btn btn-outline-primary" type="submit" onclick="redirect1()">Search</button>
+                        <button class="btn btn-outline-primary" id="submit1" type="submit" onclick="redirect1()">Search</button>
                     </div>
                 <br>
                 <div class="container">
                     <h6>Статус</h6> 
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="id_1" value="all" checked>
+                  <input class="form-check-input" type="radio" name="status" id="id_1" value="all" checked>
                   <label class="form-check-label" for="flexRadioDefault1" >
                     Все закупки
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="id_2" value="active">
+                  <input class="form-check-input" type="radio" name="status" id="id_2" value="active">
                   <label class="form-check-label" for="flexRadioDefault2">
                     Активные
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="id_3" value="closed">
+                  <input class="form-check-input" type="radio" name="status" id="id_3" value="closed">
                   <label class="form-check-label" for="flexRadioDefault3">
                     Завершенные
                   </label>
@@ -91,7 +87,7 @@
             </div>
                 <br>
                 <div class="container">
-                    <h6>Цена,₽ </h6> 
+                    <h6>Цена,₽ </h6>
                     <div class="input-group">
                       <span class="input-group-text">с</span>
                       <input class="form-control" type="text" id="coastStartRequest" >
@@ -101,10 +97,10 @@
             </div>
             </div>
             <h1 class="display-4"> </h1><br>
-            
 
 
-            
+
+
         </div>
     </div>
 
@@ -116,9 +112,9 @@
             </div>
             <div class="row my-2">
                 <div class="col-md-6 py-1">
-                    <div class="card">                        
+                    <div class="card">
                         <div class="card-body">
-                            <h7>Сравнение топ-5 компаний по продажам за 2021 год с продажами за 2020.<br> 2021-фиолетовый, 2020- голубой</h7>
+                            <h7>Сравнение топ-5 компаний по продажам за 2021 год с продажами за 2020.<br> 2021-фиолетовый, 2020- голубой<br></h7><h7><br></h7>
                             <canvas id="chLine"></canvas>
                         </div>
                     </div>
@@ -126,32 +122,65 @@
                 <div class="col-md-6 py-1">
                     <div class="card">
                         <div class="card-body">
-                            <h7>Топ-10 компаний по продажам</h7>
+                            <h7>Топ-10 компаний по продажам<br><br></h7><h7><br></h7>
                             <canvas id="chBar"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 py-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <h7>Категория "Расходные материалы и комплектующие для лазерных принтеров и МФУ"<br>Максимальная цена - 584175<br></h7><h7><br></h7>
+                            <canvas id="chBar1"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 py-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <h7>Категория "Учебники печатные общеобразовательного назначения"<br><br>Максимальная цена - 596743<br></h7><h7><br></h7>
+                            <canvas id="chBar2"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 py-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <h7>Сравнение продаж за период с 2015 по 2021 год<br></h7><h7><br></h7>
+                            <canvas id="chDonut3"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 py-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <h7>Топ-5 популярных цветов товара<br></h7><h7><br></h7>
+                            <canvas id="chDonut2"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 py-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <h7>Топ-5 популярных брендов товара<br></h7><h7><br></h7>
+                            <canvas id="chDonut1"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
 
-                <div class="col-md-4 py-1">
-                    <div class="card">
-                        <div class="card-body">
-                            <h7>Сравнение продаж за период с 2015 по 2021 год</h7>
-                            <canvas id="chDonut3"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      
+      </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
-    
+
     <script>
     /* chart.js chart examples */
-    
+
     // chart colors
-    var colors = ['#f76363', '#9963f7','#63b7f7','#76deb4','#cce64c','#e6ad4c'];
-    
+    var colors = ['#f76363', '#9963f7','#63b7f7','#76deb4','#cce64c','#e6ad4c','#ff7df2','#bc7dff'];
+
     /* large line chart */
     var chLine = document.getElementById("chLine");
     var chartData = {
@@ -191,16 +220,16 @@
       }
       });
     }
-    
-   
-    
+
+
+
     /* bar chart */
     var chBar = document.getElementById("chBar");
     if (chBar) {
       new Chart(chBar, {
       type: 'bar',
       data: {
-        labels: ['ООО "ОФИСМАГ"', 'ООО "ЦТО"', 'ООО "СТИЛУС', 'ООО "КОМСЕРВИС"', 'ООО "ПЦС"', 'ООО "МОСНАБ"', 'ООО "МОСЭНЕРГОСЕРВИС"', 'ООО "ФОРТУНА 2016"', 'ООО "АПИКОМПРОЕКТ"', 'ООО "Жизнь офиса"'],
+        labels: ['ООО "ОФИСМАГ"', 'ООО "ЦТО"', 'ООО "СТИЛУС"', 'ООО "КОМСЕРВИС"', 'ООО "ПЦС"', 'ООО "МОСНАБ"', 'ООО "МОСЭНЕРГОСЕРВИС"', 'ООО "ФОРТУНА 2016"', 'ООО "АПИКОМПРОЕКТ"', 'ООО "Жизнь офиса"'],
         datasets: [{
           data: [6461, 5036, 3962, 1495, 1466, 1423, 1368, 1357, 1322, 1251],
           backgroundColor: colors[3]
@@ -223,13 +252,68 @@
       }
       });
     }
-    
+        var chBar1 = document.getElementById("chBar1");
+    if (chBar1) {
+      new Chart(chBar1, {
+      type: 'bar',
+      data: {
+        labels: ['Медиана цены','Средняя цена', 'Минимальная цена'],
+        datasets: [{
+          data: [ 1222,3989, 12],
+          backgroundColor: colors[5]
+        },
+        {
+          data: [0],
+          backgroundColor: colors[1]
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            barPercentage: 2.5,
+            categoryPercentage: 0.5
+          }]
+        }
+      }
+      });
+    }
+                var chBar2 = document.getElementById("chBar2");
+    if (chBar2) {
+      new Chart(chBar2, {
+      type: 'bar',
+      data: {
+        labels: ['Медиана цены','Средняя цена', 'Минимальная цена'],
+        datasets: [{
+          data: [ 362,1568, 12],
+          backgroundColor: colors[4]
+        },
+        {
+          data: [0],
+          backgroundColor: colors[1]
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            barPercentage: 2.5,
+            categoryPercentage: 0.5
+          }]
+        }
+      }
+      });
+    }
     /* 3 donut charts */
     var donutOptions = {
-      cutoutPercentage: 0, 
+      cutoutPercentage: 0,
       legend: {position:'bottom', padding:5, labels: {pointStyle:'circle', usePointStyle:true}}
     };
-    
+
 
     // donut 3
     var chDonutData3 = {
@@ -250,8 +334,44 @@
           options: donutOptions
       });
     }
-
-    
+    // donut 2
+    var chDonutData2 = {
+        labels: ['Черный', 'Белый', 'Серый', 'Синий', 'Красный'],
+        datasets: [
+          {
+            backgroundColor: colors.slice(-6,8),
+            borderWidth: 0,
+            data: [17455, 17264, 5644, 4942, 3229]
+          }
+        ]
+    };
+    var chDonut2 = document.getElementById("chDonut2");
+    if (chDonut2) {
+      new Chart(chDonut2, {
+          type: 'pie',
+          data: chDonutData2,
+          options: donutOptions
+      });
+    }
+        // donut 1
+    var chDonutData1 = {
+        labels: ['Gamma', 'Kaemingk', 'Vag', 'Ford', 'Hyndai/Kia'],
+        datasets: [
+          {
+            backgroundColor: colors.slice(1,10),
+            borderWidth: 0,
+            data: [815, 360, 318, 290, 207]
+          }
+        ]
+    };
+    var chDonut1 = document.getElementById("chDonut1");
+    if (chDonut1) {
+      new Chart(chDonut1, {
+          type: 'pie',
+          data: chDonutData1,
+          options: donutOptions
+      });
+    }
 
     </script>
 
@@ -260,7 +380,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
 
-</body>
 <br><br><br>
  <footer class="border-top footer text-muted">
         <div class="container">
@@ -269,15 +388,38 @@
     </footer>
 
   <script>
-      function redirect() {
+      var input = document.getElementById("searchRequest");
+      input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("submit").click();
+  }
+});
+      var input1 = document.getElementById("searchRequest1");
+      input1.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("submit1").click();
+  }
+});
+function redirect() {
       var request = document.getElementById('searchRequest').value;
 
       location.href = ('Search.html?query=' + request);
-  } 
-      function redirect1() {
-      var request = document.getElementById('searchRequest1').value;
+  }
 
-      location.href = ('Search.html?query=' + request);
+  function redirect1() {
+          var rates = document.getElementsByName('status');
+            var statusrequest;
+            for(var i = 0; i < rates.length; i++){
+            if(rates[i].checked){
+                statusrequest = rates[i].value;
+    }
+}
+      var request = document.getElementById('searchRequest1').value;
+          var startrequest = document.getElementById('coastStartRequest').value;
+          var endrequest = document.getElementById('coastEndRequest').value;
+      location.href = ('Search.html?query=' + request + '&status='+ statusrequest +'&startPrice=' + startrequest + '&endPrice=' + endrequest);
   } 
 </script>
   </body>

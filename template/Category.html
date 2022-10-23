@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+          <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://bootstrap-4.ru/docs/5.2/assets/css/docs.css" rel="stylesheet">
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Search</title>
+
+    <link rel="stylesheet" href="{{url_for('static', filename='/css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}" />
+    <meta name="viewport" content="width=device-width" />
+
+   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+  </head>
+    <body>
+        <script src="{{url_for('static', filename='css/main.js')}}"></script>
+  <header>
+      
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light badge-light border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="image">
+               <a href="https://zakupki.mos.ru/"><img src={{url_for('static', filename='img/pp_logo.svg' )}} draggable="false" class="displayed" width="90%" align="middle" vspace="0px"></a>
+           
+            </div>
+            
+            <a class="nav-link text-dark" asp-area="" href="/" aria-current="page">MISIShunters</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" href="/" aria-current="page">Home</a>
+                    </li>
+        
+                </ul>
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Параметры</button>
+                <div class="container-fluid">
+                    <div class="d-flex">
+                        <input class="form-control me-2" id="searchRequest">
+                        <button class="btn btn-outline-primary" id="submit" type="submit" onclick="redirect()">Search</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+
+<!-- Всплывающий справа поиск -->
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Параметры поиска</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="container-fluid">
+                <div class="d-flex">
+                        <input class="form-control me-2" id="searchRequest1">
+                        <button class="btn btn-outline-primary" id="submit1" type="submit" onclick="redirect1()">Search</button>
+                    </div>
+                <br>
+                <div class="container">
+                    <h6>Статус</h6> 
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="status" id="id_1" value="all" checked>
+                  <label class="form-check-label" for="flexRadioDefault1" >
+                    Все закупки
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="status" id="id_2" value="active">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Активные
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="status" id="id_3" value="closed">
+                  <label class="form-check-label" for="flexRadioDefault3">
+                    Завершенные
+                  </label>
+                </div>
+            </div>
+                <br>
+                <div class="container">
+                    <h6>Цена,₽ </h6> 
+                    <div class="input-group">
+                      <span class="input-group-text">с</span>
+                      <input class="form-control" type="text" id="coastStartRequest" >
+                        <span class="input-group-text">по</span>
+                      <input class="form-control" type="text" id="coastEndRequest">
+                    </div>
+            </div>
+            </div>
+            <h1 class="display-4"> </h1><br>
+            
+
+
+            
+        </div>
+    </div>
+
+
+
+
+<!-- вывод соо о том, что поиск прошел успешно -->
+    {% if results != '' %}
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+      <symbol id="check-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path>
+      </symbol>
+    </svg>
+
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+      <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"></use></svg>
+      <div>Found documents in {{ time }} seconds.</div>
+    </div>
+    
+    {% endif %}
+        
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/Search.html">Поиск</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{category}}</li>
+  </ol>
+</nav>
+
+
+
+<!-- вывод карточек товаров -->
+{% for i, name, title, description in results %}
+        <div class="container">
+            <main role="main" class="pb-3">
+
+                <div class="card w-100">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ name }}</h5>
+                    <p class="card-text">{{ title }}</p>
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                      <div class="accordion-item">
+                        <h2 class="accordion-header">
+                          <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-{{i}}"
+                            aria-expanded="false"                            
+                          >
+                            Подробнее
+                          </button>
+                        </h2>
+                        <div
+                          id="flush-{{i}}"
+                          class="accordion-collapse collapse"
+                          data-bs-parent="#accordionFlushExample"
+                          style=""
+                        >
+                          <div class="accordion-body">
+                               <pre>
+                                  <h5>
+                            {{description}}
+                                  </h5>>
+                              </pre>
+                          </div>
+                        </div>
+                      </div>      
+                    </div>
+                  </div>
+                </div>
+
+            </main>
+        </div>
+    {% endfor %}
+        
+
+
+  <!-- футер -->
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - MISIShunters - <a asp-area="" href="/Privacy.html" aria-current="page">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/js/main.js" ></script>
+
+
+<script>
+      var input = document.getElementById("searchRequest");
+      input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("submit").click();
+  }
+});
+      var input1 = document.getElementById("searchRequest1");
+      input1.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("submit1").click();
+  }
+});
+function redirect() {
+      var request = document.getElementById('searchRequest').value;
+
+      location.href = ('Search.html?query=' + request);
+  }
+
+  function redirect1() {
+          var rates = document.getElementsByName('status');
+            var statusrequest;
+            for(var i = 0; i < rates.length; i++){
+            if(rates[i].checked){
+                statusrequest = rates[i].value;
+    }
+}
+      var request = document.getElementById('searchRequest1').value;
+          var startrequest = document.getElementById('coastStartRequest').value;
+          var endrequest = document.getElementById('coastEndRequest').value;
+      location.href = ('Search.html?query=' + request + '&status='+ statusrequest +'&startPrice=' + startrequest + '&endPrice=' + endrequest);
+  } 
+</script>
+  </body>
+</html>
