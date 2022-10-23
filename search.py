@@ -25,7 +25,6 @@ class Document:
 
     def format(self, query):
         # возвращает пару тайтл-текст, отформатированную под запрос
-        # что добавлять лизе
         return [self.id, self.title, self.cluster,
                 chartotext(self.new_char) + sellerstotext(self.sellers)]
 
@@ -99,7 +98,7 @@ def score(query, doc):
     return cosine_similarity(doc, query_vec)
 
 
-def retrieve(query):
+def retrieve(query, startPrice, endPrice):
     # возвращает начальный список релевантных документов
     # (желательно, не бесконечный)
     global index, title_invert_index
@@ -125,7 +124,50 @@ def retrieve(query):
         b = ans.tolist()
         b.sort(reverse=True)
         index1 = np.array(index)
+        if startPrice!=None or endPrice!=None:
+            new_data = index1[list(map(int, [x[1] for x in b]))]
+            del_all(new_data, startPrice, endPrice)
+
+
         finl_doc = index1[list(map(int, [x[1] for x in b[:15]]))]
 
         return finl_doc
 
+# def del_start(x):
+#     global startPrice
+#     new_x = []
+#     for i in x:
+#         sellers_dict = ast.literal_eval(i.sellers)
+#         f = False
+#         for comp in sellers_dict.keys():
+#             if float(sellers_dict[comp]) >= startPrice:
+#                 f = True
+#         if f:
+#             new_x.append(i)
+#     return new_x
+#
+# def del_end(x):
+#     global endPrice
+#     new_x = []
+#     for i in x:
+#         sellers_dict = ast.literal_eval(i.sellers)
+#         f = False
+#         for comp in sellers_dict.keys():
+#             if float(sellers_dict[comp]) <= endPrice:
+#                 f = True
+#         if f:
+#             new_x.append(i)
+#     return new_x
+
+def del_all(x, startPrice, endPrice):
+    new_x = []
+    for i in x:
+        sellers_dict = ast.literal_eval(i.sellers)
+        f = False
+        for comp in sellers_dict.keys():
+            if (endPrice is not None and float(sellers_dict[comp]) <= endPrice) and (startPrice is not None and float(sellers_dict[comp]) >= startPrice):
+                f = True
+                break
+        if f:
+            new_x.append(i)
+    return new_x

@@ -10,9 +10,11 @@ build_index()
 def search():
     start_time = time()
     query = request.args.get('query')
+    startPrice = request.args.get('startPrice')
+    endPrice = request.args.get('endPrice')
     if query is None:
         query = ''
-    documents = retrieve(query)
+    documents = retrieve(query, startPrice, endPrice)
     results = [doc.format(query) for doc in documents]
     return render_template(
         'template/Search.html',

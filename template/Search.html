@@ -72,28 +72,30 @@
         </div>
         
         <div class="offcanvas-body">
+            <form class="d-flex">
             <div class="container-fluid">
-                <form class="d-flex">
+                
+                    <div class="container">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='query'>
                     <button class="btn btn-outline-primary" type="submit">Search</button><br>
-                </form>
+                    </div>
                 <br>
                 <div class="container">
                     <h6>Статус</h6> 
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="id_1" value="all" checked>
+                  <input class="form-check-input" type="radio" name="status" id="id_1" value="all" checked>
                   <label class="form-check-label" for="flexRadioDefault1" >
                     Все закупки
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="id_2" value="active">
+                  <input class="form-check-input" type="radio" name="status" id="id_2" value="active">
                   <label class="form-check-label" for="flexRadioDefault2">
                     Активные
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="id_3" value="closed">
+                  <input class="form-check-input" type="radio" name="status" id="id_3" value="closed">
                   <label class="form-check-label" for="flexRadioDefault3">
                     Завершенные
                   </label>
@@ -104,12 +106,14 @@
                     <h6>Цена,₽ </h6> 
                     <div class="input-group">
                       <span class="input-group-text">с</span>
-                      <input class="form-control" type="text" id="coastStartRequest" >
+                      <input class="form-control" type="text" id="coastStartRequest" name='startPrice'>
                         <span class="input-group-text">по</span>
-                      <input class="form-control" type="text" id="coastEndRequest">
+                      <input class="form-control" type="text" id="coastEndRequest" name='endPrice'>
                     </div>
             </div>
-            </div>
+                    </div>
+                </form>
+            
             <h1 class="display-4"> </h1><br>
             
         </div>
@@ -190,33 +194,6 @@
         </div>
     {% endfor %}
         
-
-
-
-<!-- убрать  кусок текста ниже -->
-
-           <div class="container">
-            <main role="main" class="pb-3">
-
-                <div class="card w-100">
-                  <div class="card-body">
-                    <h5 class="card-title">{{ title1 }}</h5>
-                    <p class="card-text">{{ title2 }}</p>
-                    <p>
-                      <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                        Подробнее
-                      </a>
-                    </p>
-                    <div class="collapse" id="collapseExample">
-                      <div class="card card-body">
-                        {{ title3 }}
-                      </div>
-                    </div>
-                </div>
-            </div>            
-        </main>
-    </div>
-
 
 
   <!-- футер -->
